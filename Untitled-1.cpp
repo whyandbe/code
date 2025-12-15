@@ -1,5 +1,7 @@
 #include "iostream"
+#include "node.h"
+#include "register.h"
 using namespace std;
 int main(){
-    cout<<1;
-}
+      rg();
+ }
