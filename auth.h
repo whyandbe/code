@@ -1,0 +1,78 @@
+#pragma once
+#include "utils.h"
+mebr* rg(mebr* head) {
+    printf("请输入你的名字(小于10个字符)");
+    char name1[10];
+    scanf("%s", name1);
+    getchar();
+    printf("请输入你的账号(小于10个字符)");
+    char username1[10];
+    scanf("%s", username1);
+    getchar();
+    printf("请输入你的密码(小于10个字符)");
+    char passwords1[10];
+    scanf("%s", passwords1);
+    getchar();
+    head = newadd(head, name1, username1, passwords1, ping);
+    savedata(head, "D:/ping.user.data");
+    printf("管理员审批中\n");
+    return head;
+}
+int choice() {
+    int num;
+    printf("1.成员注册 2.成员登录 3.管理员登陆 4.社长登录 5.推出\n");
+    scanf("%d", &num);
+    return num;
+}
+int enty() {
+    char usn[] = { "1" };
+    char pas[] = { "1" };
+    char usn1[10];
+    char pas1[10];
+    do {
+        printf("请输入账号\n");
+        scanf("%s", usn1);
+        getchar();
+        printf("请输入密码\n");
+        scanf("%s", pas1);
+        if (strcmp(usn1, usn) != 0)printf("账号错误\n");
+        if (strcmp(pas1, pas) != 0)printf("密码错误\n");
+    } while (strcmp(usn1, usn) != 0 || strcmp(pas1, pas));
+    printf("登陆成功\n");
+    return 1;
+}
+int mebrenty(mebr* applhead) {
+    char name[10];
+    char usn1[10];
+    char pas1[10];
+    printf("请输入你的名字\n");
+    scanf("%s", name);
+    getchar();
+    printf("请输入账号\n");
+    scanf("%s", usn1);
+    getchar();
+    printf("请输入密码\n");
+    scanf("%s", pas1);
+    applhead = applhead->next;
+    while (applhead) {
+        int t1 = 0, t2 = 0;
+        if (strcmp(applhead->name, name) != 0) {
+            applhead = applhead->next;
+        }
+        else {
+            if (strcmp(applhead->username, usn1) != 0) {
+                printf("账号错误\n");
+            }
+            else {
+                t1 = 1;
+            }
+            if (strcmp(applhead->passwords, pas1) != 0) {
+                printf("密码错误\n");
+            }
+            else {
+                t2 = 1;
+            }
+        }
+        if (t1 == 1 && t2 == 1)return 1;
+    }
+}
