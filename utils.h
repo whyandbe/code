@@ -3,6 +3,7 @@
 #include "stdio.h"
 #include "malloc.h"
 #include "string.h"
+char namenow[10];
 typedef enum {
     ping,
     appl,
@@ -15,6 +16,14 @@ typedef struct m {
     sta sta;
     struct m* next;
 }mebr;
+typedef struct activmebr{
+    char name[10];
+    struct activmebr* next;
+}am;
+typedef struct a{
+    char name[10];
+    am* head;
+}activ;
 mebr* newm1(char name[10], char username[10], char passwords[10], sta sta) {
     mebr* newm = (mebr*)malloc(sizeof(mebr));
     if (!newm) {
@@ -120,4 +129,96 @@ void record(mebr* applhead, mebr* rejehead) {
         printf("以下同学已被拒绝\n");
         show(rejehead);
     }
+}
+void savei(int i){
+    FILE* fp = fopen("D:/i","w");
+    fprintf(fp,"%d",i);
+    fclose(fp);
+}
+int readi(){
+    int i;
+    FILE* fp = fopen("D:/i","r");
+    if(fp == 0)return -1;
+    if(fscanf(fp,"%d",&i) == 0)return -1;
+    fclose(fp);
+    return i;
+}
+void saveacti(activ acti[],int i){
+    FILE* fp =fopen("D:/newact","w");
+    for(int j=0;j<i;j++){
+        fprintf(fp,"%s ",acti[j].name);
+        am* head = acti[j].head;
+        if(head->next){
+            head = head->next;
+            while(head){
+                fprintf(fp,"%s ",head->name);
+                head =head->next;
+            }
+            }
+    }
+    fclose(fp);
+}
+void createacti(activ a[],int i){
+    for(int j=0;j<=i;j++){
+        a[j].head= (am*)malloc(sizeof(am));
+        memset(a[j].head,0,sizeof(am));
+        a[j].head->next =0;
+    }
+}
+void readacti(activ acti[],int i){
+    FILE* fp =fopen("D:/newact","r");
+    createacti(acti,i);
+    if(fp ==0)return;
+    for(int j=0;j<=i;j++){
+        char name[10];
+        if(fscanf(fp,"%s",acti[j].name)==1){
+            am* new1 =acti[j].head;
+            while(fscanf(fp,"%s",name) ==1){
+                am* newhead =(am*)malloc(sizeof(am));
+                strcpy(newhead->name,name);
+                am* tial = (am*)malloc(sizeof(am));
+                if(acti[j].head->next == 0){
+                    tial = newhead;
+                    acti[j].head->next = newhead;
+                    tial  = newhead;
+                }
+                else{
+                    tial ->next =newhead;
+                    tial = newhead;
+                }
+            }
+            acti[j].head =new1;
+        }
+
+    }
+    fclose(fp);
+}
+activ newact(){
+    activ a;
+    printf("请输入活动名\n");
+    scanf("%s",a.name);
+    a.head = (am*)malloc(sizeof(am));
+    a.head->next =0;
+    return a;
+}
+void newactc(activ acti[],int i){
+    if(readi() ==-1)i=0;
+    acti[i] = newact();
+    i++;
+    savei(i);
+    saveacti(acti,i);
+}
+activ newactimebr(activ a[],int j){
+    am* newone =(am*)malloc(sizeof(am));
+    am* tial = newone;
+    tial ->next =0;
+    strcpy(newone->name,namenow);
+    if(a[j].head->next == 0){
+        a[j].head->next =newone;
+    }
+    else{
+        tial ->next =newone;
+        tial = newone;
+    }
+    return a[j];
 }

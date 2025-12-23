@@ -42,21 +42,20 @@ int enty() {
     return 1;
 }
 int mebrenty(mebr* applhead) {
-    char name[10];
     char usn1[10];
     char pas1[10];
-    printf("请输入你的名字\n");
-    scanf("%s", name);
-    getchar();
-    printf("请输入账号\n");
-    scanf("%s", usn1);
-    getchar();
-    printf("请输入密码\n");
-    scanf("%s", pas1);
     applhead = applhead->next;
     while (applhead) {
         int t1 = 0, t2 = 0;
-        if (strcmp(applhead->name, name) != 0) {
+        printf("请输入你的名字\n");
+        scanf("%s", namenow);
+        getchar();
+        printf("请输入账号\n");
+        scanf("%s", usn1);
+        getchar();
+        printf("请输入密码\n");
+        scanf("%s", pas1);
+        if (strcmp(applhead->name, namenow) != 0) {
             applhead = applhead->next;
         }
         else {
@@ -82,7 +81,11 @@ int presenty(){
     char usn[10];
     char pas[10];
     while(1){
-        scanf("%9s %9s",usn,pas);
+        printf("请输入您的账号\n");
+        scanf("%9s",usn);
+        getchar();
+        printf("请输入您的密码\n");
+        scanf("%9s",pas);
         int r1 = strcmp(usn1,usn);
         int r2 = strcmp(pas1,pas);
         if(r1 == 0&&r2 == 0)return 1;
