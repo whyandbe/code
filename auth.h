@@ -20,7 +20,7 @@ mebr* rg(mebr* head) {
 }
 int choice() {
     int num;
-    printf("1.成员注册 2.成员登录 3.管理员登陆 4.社长登录 5.推出\n");
+    printf("1.成员注册 2.成员登录 3.管理员登陆 4.社长登录 5.退出\n");
     scanf("%d", &num);
     return num;
 }
@@ -74,5 +74,19 @@ int mebrenty(mebr* applhead) {
             }
         }
         if (t1 == 1 && t2 == 1)return 1;
+    }
+}
+int presenty(){
+    char usn1[10] = {"1"};
+    char pas1[10] = {"1"};
+    char usn[10];
+    char pas[10];
+    while(1){
+        scanf("%9s %9s",usn,pas);
+        int r1 = strcmp(usn1,usn);
+        int r2 = strcmp(pas1,pas);
+        if(r1 == 0&&r2 == 0)return 1;
+        if(r1 != 0)printf("您非社长,请选择其他方式登录\n");
+        if(r2 != 0)printf("密码错误\n");
     }
 }

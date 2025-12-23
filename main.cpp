@@ -29,7 +29,9 @@ int main() {
             showclub(applhead);
             break;
         case 2:
+        break;
         case 3:
+        break;
         case 4:
             return 0;
             break;
@@ -43,10 +45,14 @@ int main() {
             switch (n3) {
             case 1:
                 appr(pinghead);
+                break;
             case 2:
                 record(applhead, rejehead);
+                break;
             case 3:
+            break;
             case 4:
+            break;
             case 5:
                 sta = 0;
                 return 0;
@@ -54,5 +60,20 @@ int main() {
         }
         break;
     }
+    case 4:
+    int n4;
+    if(presenty()){
+        n4 = choicepres();
+    }
+    switch(n4){
+        case 1:
+        showclub(applhead);
+        break;
+        case 2:
+        
+    }
+    break;
+    case 5:
+    return 0;
     }
 }

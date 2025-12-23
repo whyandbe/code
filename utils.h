@@ -52,6 +52,7 @@ void savedata(mebr* head, const char* ass) {
     fclose(fp);
 }
 void show(mebr* head) {
+    head=head->next;
     while (head != 0) {
         printf("%s\n", head->name);
         head = head->next;
@@ -82,7 +83,7 @@ void appr(mebr* pinghead) {
         count++;
         printf("第%d个待审批成员信息", count);
         printf("姓名：%s\n账号：%s\n密码：%s\n", q->name, q->username, q->passwords);
-        printf("是否审批通过-------( 1 / 2 )");
+        printf("是否审批通过-------( 1 / 2 )\n");
         int ch;
         scanf("%d", &ch);
         if (ch == 1) {
@@ -107,12 +108,16 @@ void appr(mebr* pinghead) {
         }
     }
     savedata(applhead1, "D:/appl.user.data");
-    savedata(rejehead1, "D:/reje.user,data");
+    savedata(rejehead1, "D:/reje.user.data");
     savedata(pinghead, "D:/ping.user.data");
 }
 void record(mebr* applhead, mebr* rejehead) {
-    printf("以下同学已被拒绝\n");
-    show(applhead);
-    printf("以下同学已被同意\n");
-    show(rejehead);
+    if(applhead->next){
+        printf("以下同学已被同意\n");
+        show(applhead);
+    }
+    if(rejehead->next){
+        printf("以下同学已被拒绝\n");
+        show(rejehead);
+    }
 }
