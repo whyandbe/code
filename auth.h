@@ -56,7 +56,8 @@ int mebrenty(mebr* applhead) {
         printf("请输入密码\n");
         scanf("%s", pas1);
         if (strcmp(applhead->name, namenow) != 0) {
-            applhead = applhead->next;
+            printf("账号不存在，请注册\n");
+            if(applhead->next)applhead = applhead->next;
         }
         else {
             if (strcmp(applhead->username, usn1) != 0) {

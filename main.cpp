@@ -3,15 +3,12 @@
 #include "club.h"
 #include "utils.h"
 int i = readi();
-mebr* pinghead = readdata("D:/ping.user.data");
-mebr* applhead = readdata("D:/appl.user.data");
-mebr* rejehead = readdata("D:/reje.user.data");
 activ acti[200];
 using namespace std;
 int main() {
+    while(1){
     if(readi() == -1)i=0;
-    readacti(acti,i);
-    printf("%s",acti[0].head->next->name);
+    readacti(acti,i); 
     int sta = 1;
     if (sta == 0)
     {
@@ -95,4 +92,5 @@ int main() {
     case 5:
         return 0;
     }
+}
 }

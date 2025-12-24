@@ -3,6 +3,7 @@
 #include "stdio.h"
 #include "malloc.h"
 #include "string.h"
+#include "auth.h"
 char namenow[10];
 typedef enum {
     ping,
@@ -39,15 +40,19 @@ mebr* newm1(char name[10], char username[10], char passwords[10], sta sta) {
 }
 mebr* createm() {
     mebr* head = (mebr*)malloc(sizeof(mebr));
-    memset(head, 0, sizeof(head));
+    memset(head, 0, sizeof(mebr));
     head->next = 0;
     return head;
 }
 mebr* newadd(mebr* head, char name[10], char username[10], char passwords[10], sta sta) {
     mebr* list = newm1(name, username, passwords, sta);
-    if (head) {
-        list->next = head->next;
-        head->next = list;
+    mebr* tial = (mebr*)malloc(sizeof(mebr));
+    tial =head;
+    while(tial->next){
+        tial =tial ->next;
+    }
+    if (tial) {
+        tial ->next =list;
     }
     return head;
 }
@@ -55,7 +60,7 @@ void savedata(mebr* head, const char* ass) {
     FILE* fp = fopen(ass, "w");
     head = head->next;
     while (head) {
-        fprintf(fp, "%s %s %s %d", head->name, head->username, head->passwords, head->sta);
+        fprintf(fp, "%s %s %s %d ", head->name, head->username, head->passwords, head->sta);
         head = head->next;
     }
     fclose(fp);
@@ -79,16 +84,17 @@ mebr* readdata(const char* ass) {
     fclose(fp);
     return head;
 }
+mebr* pinghead = readdata("D:/ping.user.data");
+mebr* applhead = readdata("D:/appl.user.data");
+mebr* rejehead = readdata("D:/reje.user.data");
 void appr(mebr* pinghead) {
     int count = 0;
-    mebr* applhead1 = createm();
-    mebr* rejehead1 = createm();
     if (pinghead->next == 0) {
         printf("暂无人员需要审批\n");
         return;
     }
-    while (pinghead->next) {
-        mebr* q = pinghead->next;
+    mebr* q =pinghead->next;
+    while (q) {
         count++;
         printf("第%d个待审批成员信息", count);
         printf("姓名：%s\n账号：%s\n密码：%s\n", q->name, q->username, q->passwords);
@@ -96,28 +102,31 @@ void appr(mebr* pinghead) {
         int ch;
         scanf("%d", &ch);
         if (ch == 1) {
-            applhead1 = newadd(applhead1, q->name, q->username, q->passwords, appl);
+            applhead = newadd(applhead, q->name, q->username, q->passwords, appl);
             if (q->next) {
-                pinghead->next = q->next;
-                pinghead = pinghead->next;
-                printf("%s已被通过", q->name);
+                q = q->next;
+                printf("%s已被通过\n", q->name);
             }
-            free(q);
-            pinghead->next = 0;
+            else{
+                pinghead->next = 0;
+                break;
+            }
         }
         else if (ch == 2) {
-            rejehead1 = newadd(rejehead1, q->name, q->username, q->passwords, reje);
+            rejehead = newadd(rejehead, q->name, q->username, q->passwords, reje);
             if (q->next) {
-                pinghead->next = q->next;
-                pinghead = pinghead->next;
+                q = q->next;
                 printf("%s同学已被拒绝", pinghead);
             }
-            free(q);
-            pinghead->next = 0;
+            else{
+                pinghead->next = 0;
+                break;
+            }
         }
     }
-    savedata(applhead1, "D:/appl.user.data");
-    savedata(rejehead1, "D:/reje.user.data");
+    free(q);
+    savedata(applhead, "D:/appl.user.data");
+    savedata(rejehead, "D:/reje.user.data");
     savedata(pinghead, "D:/ping.user.data");
 }
 void record(mebr* applhead, mebr* rejehead) {
@@ -210,13 +219,15 @@ void newactc(activ acti[],int i){
 }
 activ newactimebr(activ a[],int j){
     am* newone =(am*)malloc(sizeof(am));
-    am* tial = newone;
-    tial ->next =0;
+    am* tial = a[j].head;
     strcpy(newone->name,namenow);
     if(a[j].head->next == 0){
         a[j].head->next =newone;
     }
     else{
+        while(tial->next){
+            tial =tial->next;
+        }
         tial ->next =newone;
         tial = newone;
     }
