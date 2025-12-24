@@ -46,6 +46,7 @@ int mebrenty(mebr* applhead) {
     char pas1[10];
     applhead = applhead->next;
     while (applhead) {
+        int f =0;
         int t1 = 0, t2 = 0;
         printf("请输入你的名字\n");
         scanf("%s", namenow);
@@ -55,13 +56,11 @@ int mebrenty(mebr* applhead) {
         getchar();
         printf("请输入密码\n");
         scanf("%s", pas1);
-        if (strcmp(applhead->name, namenow) != 0) {
-            printf("账号不存在，请注册\n");
-            if(applhead->next)applhead = applhead->next;
+        while(strcmp(applhead->username, namenow) != 0&&applhead->next !=0){
+            applhead =applhead->next;
         }
-        else {
             if (strcmp(applhead->username, usn1) != 0) {
-                printf("账号错误\n");
+            printf("账号错误\n");
             }
             else {
                 t1 = 1;
@@ -72,10 +71,9 @@ int mebrenty(mebr* applhead) {
             else {
                 t2 = 1;
             }
+            if (t1 == 1 && t2 == 1)return 1;
         }
-        if (t1 == 1 && t2 == 1)return 1;
     }
-}
 int presenty(){
     char usn1[10] = {"1"};
     char pas1[10] = {"1"};
