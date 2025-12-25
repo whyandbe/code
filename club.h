@@ -11,7 +11,7 @@ void showclub(mebr* applhead) {
 }
 int choiceappr() {
     int n;
-    printf("1.审批注册新成员 2.查看社团审批记录 3.查看社团活动\n 4.查看社团花费记录 5.注销社团 6.退出登录\n");
+    printf("1.审批注册新成员 2.查看社团审批记录 3.查看社团活动\n 4.审批经费 5.查看社团花费记录 6.注销社团 7.退出登录\n");
     scanf("%d", &n);
     return n;
 }
@@ -23,7 +23,7 @@ int choicemebr() {
 }
 int choicepres(){
     int n;
-    printf("1.查看社团信息 2.查看个人信息 3.发布活动\n4.查看社团花费记录 5.申请社团经费 6.查看经费\n7.退出登录");
+    printf("1.查看社团信息 2.查看个人信息 3.发布活动\n4.查看社团花费记录 5.申请社团经费 6.查看经费\n7.退出登录\n");
     scanf("%d", &n);
     return n;
 }

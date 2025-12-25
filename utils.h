@@ -19,11 +19,11 @@ typedef struct m {
 }mebr;
 typedef struct activmebr{
     char name[10];
-    int need;
     struct activmebr* next;
 }am;
 typedef struct a{
     char name[10];
+    int need;
     am* head;
 }activ;
 mebr* newm1(char name[10], char username[10], char passwords[10], sta sta) {
@@ -157,6 +157,7 @@ void saveacti(activ acti[],int i){
     FILE* fp =fopen("D:/newact","w");
     for(int j=0;j<i;j++){
         fprintf(fp,"%s ",acti[j].name);
+        fprintf(fp,"%d ",acti[j].need);
         am* head = acti[j].head;
         if(head->next){
             head = head->next;
@@ -181,8 +182,9 @@ void readacti(activ acti[],int i){
     if(fp ==0)return;
     for(int j=0;j<=i;j++){
         char name[10];
+        int need;
         am* tial = acti[j].head;
-        if(fscanf(fp,"%s",acti[j].name)==1){
+        if(fscanf(fp,"%s",acti[j].name)==1&&fscanf(fp,"%d",&acti[j].need)==1){
             while(fscanf(fp,"%s",name) ==1){
                 am* newhead =(am*)malloc(sizeof(am));
                 strcpy(newhead->name,name);
@@ -226,7 +228,7 @@ void savemoney(int money){
 int readmoney(){
     int money;
     FILE* fp =fopen("D:/money","r");
-    fscanf(fp,"%d",money);
+    fscanf(fp,"%d",&money);
     fclose(fp);
     return money;
 }
@@ -237,24 +239,37 @@ void applymoney(){
     FILE* fp =fopen("D:/applymoney","w");
     fprintf(fp,"%d",wants);
     fclose(fp);
-    printf("%d元正在审批中");
+    printf("%d元正在审批中\n",wants);
 }
 int apprmoney(int money){
     while(1){
         int ch;
         int addmoney;
         FILE* fp =fopen("D:/applymoney","r");
-        fscanf(fp,"%d",addmoney);
+        fscanf(fp,"%d",&addmoney);
         fclose(fp);
+        if(addmoney == 0){
+            printf("暂无经费需要审批\n");
+            FILE* fp =fopen("D:/applymoney","w");
+            fprintf(fp,"%d",0);
+            fclose(fp);
+            return money;
+        }
         printf("社长申请了%d元\n是否同意-----(1/2)\n",addmoney);
         scanf("%d",&ch);
         if(ch == 2){
-            FILE* fp = fopen("D:/said","w");
-            fprintf(fp,"%s","被管理员驳回了\n");
+            FILE* fp =fopen("D:/applymoney","w");
+            fprintf(fp,"%d",0);
             fclose(fp);
+            FILE* Fp = fopen("D:/said","w");
+            fprintf(Fp,"%s","被管理员驳回了\n");
+            fclose(Fp);
             return 0;
         }
         else if(ch == 1){
+            FILE* fp =fopen("D:/applymoney","w");
+            fprintf(fp,"%d",0);
+            fclose(fp);
             return money+addmoney;
         }
         else{
@@ -269,4 +284,27 @@ void readsaid(){
         printf("%s\n",said);
     }
     fclose(fp);
+}
+int actimoney(activ a[],int i,int* money){
+    printf("请输入活动要花费的经费\n");
+    scanf("%d",&a[i].need);
+    if(a[i].need>*money){
+        printf("该活动要求%d\n经费不足\n",a[i].need);
+        return 0;
+    }
+    else{
+        printf("活动花费%d元",a[i].need);
+        *money -= a[i].need;
+        return 1;
+    }
+    savemoney(*money);
+}
+void costrecord(activ a[],int i){
+    if(i == 0){
+        printf("暂无花费记录\n");
+        return;
+    }
+    for(int j=0;j<i;j++){
+       printf("%s : -%d\n",a[j].name,a[j].need); 
+    }
 }

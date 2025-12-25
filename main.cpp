@@ -2,6 +2,7 @@
 #include "auth.h"
 #include "club.h"
 #include "utils.h"
+#include "time.h"
 int i = readi();
 int money =readmoney();
 activ acti[200];
@@ -41,8 +42,6 @@ int main() {
     saveacti(acti,i);
     printf("您以报名\n");
     break;
-    case 4://退出程序
-    return 0;
     }
     break;
     }
@@ -60,9 +59,14 @@ int main() {
         case 3://社团活动展示
         showactiname(acti,i);
         break;
-        case 4://经费记录
+        case 4://审批经费
+        money = apprmoney(money);
+        savemoney(money);
         break;
-        case 5://退出
+        case 5://经费记录
+        costrecord(acti,i);
+        break;
+        case 6://退出
         sta = 0;
         return 0;
         }
@@ -84,9 +88,12 @@ int main() {
             ifmtpres();
             break;
         case 3://发布活动
+        if(actimoney(acti,i,&money)){
             newactc(acti,i);
+        }
             break;
         case 4://经费记录
+            costrecord(acti,i);
             break;
         case 5://申请经费
             readsaid();
