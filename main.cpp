@@ -3,7 +3,7 @@
 #include "club.h"
 #include "utils.h"
 #include "time.h"
-int i = readi();
+int i = readi();//活动数量
 int money =readmoney();
 activ acti[200];
 using namespace std;
