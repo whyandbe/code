@@ -19,6 +19,7 @@ typedef struct m {
 }mebr;
 typedef struct activmebr{
     char name[10];
+    int need;
     struct activmebr* next;
 }am;
 typedef struct a{

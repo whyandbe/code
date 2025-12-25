@@ -92,7 +92,7 @@ int main() {
             readsaid();
             applymoney();
             break;
-        case 6://查看经费
+        case 6://查看社团现有经费
             printf("社团资金:%d\n",money);
             break;
         case 7://退出
