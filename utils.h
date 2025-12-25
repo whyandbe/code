@@ -180,56 +180,92 @@ void readacti(activ acti[],int i){
     if(fp ==0)return;
     for(int j=0;j<=i;j++){
         char name[10];
+        am* tial = acti[j].head;
         if(fscanf(fp,"%s",acti[j].name)==1){
-            am* new1 =acti[j].head;
             while(fscanf(fp,"%s",name) ==1){
                 am* newhead =(am*)malloc(sizeof(am));
                 strcpy(newhead->name,name);
-                am* tial = (am*)malloc(sizeof(am));
-                if(acti[j].head->next == 0){
-                    tial = newhead;
-                    acti[j].head->next = newhead;
-                    tial  = newhead;
-                }
-                else{
                     tial ->next =newhead;
                     tial = newhead;
-                }
             }
-            acti[j].head =new1;
         }
-
+        tial->next =0;
     }
     fclose(fp);
 }
-activ newact(){
-    activ a;
-    printf("请输入活动名\n");
-    scanf("%s",a.name);
-    a.head = (am*)malloc(sizeof(am));
-    a.head->next =0;
-    return a;
-}
-void newactc(activ acti[],int i){
+void newactc(activ a[],int i){
     if(readi() ==-1)i=0;
-    acti[i] = newact();
+    printf("请输入活动名\n");
+    scanf("%s",a[i].name);
     i++;
     savei(i);
-    saveacti(acti,i);
+    saveacti(a,i);
 }
-activ newactimebr(activ a[],int j){
+am* newactimebr(activ a[],int j){
     am* newone =(am*)malloc(sizeof(am));
+    newone ->next =0;
     am* tial = a[j].head;
     strcpy(newone->name,namenow);
     if(a[j].head->next == 0){
         a[j].head->next =newone;
     }
     else{
-        while(tial->next){
+        while(tial->next != 0){
             tial =tial->next;
         }
         tial ->next =newone;
-        tial = newone;
     }
-    return a[j];
+    return a[j].head;
+}
+void savemoney(int money){
+    FILE* fp =fopen("D:/money","w");
+    fprintf(fp,"%d",money);
+    fclose(fp);
+}
+int readmoney(){
+    int money;
+    FILE* fp =fopen("D:/money","r");
+    fscanf(fp,"%d",money);
+    fclose(fp);
+    return money;
+}
+void applymoney(){
+    int wants;
+    printf("请输入要申请的经费\n");
+    scanf("%d",&wants);
+    FILE* fp =fopen("D:/applymoney","w");
+    fprintf(fp,"%d",wants);
+    fclose(fp);
+    printf("%d元正在审批中");
+}
+int apprmoney(int money){
+    while(1){
+        int ch;
+        int addmoney;
+        FILE* fp =fopen("D:/applymoney","r");
+        fscanf(fp,"%d",addmoney);
+        fclose(fp);
+        printf("社长申请了%d元\n是否同意-----(1/2)\n",addmoney);
+        scanf("%d",&ch);
+        if(ch == 2){
+            FILE* fp = fopen("D:/said","w");
+            fprintf(fp,"%s","被管理员驳回了\n");
+            fclose(fp);
+            return 0;
+        }
+        else if(ch == 1){
+            return money+addmoney;
+        }
+        else{
+            printf("请重新输入(1/2)\n");
+        }
+    }
+}
+void readsaid(){
+    char said[100];
+    FILE* fp =fopen("D:/said","r");
+    if(fscanf(fp,"%s",said) == 1){
+        printf("%s\n",said);
+    }
+    fclose(fp);
 }

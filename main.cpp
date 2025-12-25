@@ -3,6 +3,7 @@
 #include "club.h"
 #include "utils.h"
 int i = readi();
+int money =readmoney();
 activ acti[200];
 using namespace std;
 int main() {
@@ -18,78 +19,88 @@ int main() {
     int n = choice();
     switch (n)
     {
-    case 1:
+    case 1://成员注册
     pinghead = rg(pinghead);
     break;
-    case 2:
+    case 2://成员登录
     {
     if (mebrenty(applhead))printf("登陆成功\n");
     int n2 = choicemebr();
     switch (n2)
     {
-    case 1:
+    case 1://社团信息
     showclub(applhead);
     break;
-    case 2:
+    case 2://个人信息
     showself(acti,i);
     break;
-    case 3:
+    case 3://报名活动
     int ch = showacti(acti,i);
-    acti[ch] =newactimebr(acti,ch);
+    if(ch == -1)break;
+    acti[ch].head =newactimebr(acti,ch);
     saveacti(acti,i);
     printf("您以报名\n");
     break;
+    case 4://退出程序
+    return 0;
     }
     break;
     }
-    case 3:
+    case 3://管理员登录
     {
     if (enty()) {
         int n3 = choiceappr();
         switch (n3) {
-        case 1:
+        case 1://审批用户
         appr(pinghead);
         break;
-        case 2:
+        case 2://审批记录
         record(applhead, rejehead);
         break;
-        case 3:
+        case 3://社团活动展示
+        showactiname(acti,i);
         break;
-        case 4:
+        case 4://经费记录
         break;
-        case 5:
+        case 5://退出
         sta = 0;
         return 0;
         }
     }
     break;
     }
-    case 4:{
+    case 4://社长登录
+    {
     int n4;
     if(presenty()){
         n4 = choicepres();
     }
     switch(n4)
     {
-        case 1:
+        case 1://展示社团成员
             showclub(applhead);
             break;
-        case 2:
+        case 2://个人信息
             ifmtpres();
             break;
-        case 3:
+        case 3://发布活动
             newactc(acti,i);
             break;
-        case 4:
+        case 4://经费记录
             break;
-        case 5:
+        case 5://申请经费
+            readsaid();
+            applymoney();
             break;
-        case 6:
+        case 6://查看经费
+            printf("社团资金:%d\n",money);
+            break;
+        case 7://退出
             return 0;
     }
     break;
     }
-    case 5:
+    case 5://退出程序
         return 0;
     }
 }
