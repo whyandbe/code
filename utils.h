@@ -308,3 +308,22 @@ void costrecord(activ a[],int i){
        printf("%s : -%d\n",a[j].name,a[j].need); 
     }
 }
+void cleanall(){
+    FILE* fp = fopen("D:/applymoney","w");
+    fclose(fp);
+    FILE* fp1 = fopen("D:/ping.user.data","w");
+    fclose(fp1);
+    FILE* fp2 = fopen("D:/reje.user.data","w");
+    fclose(fp2);
+    FILE* fp3 = fopen("D:/appl.user.data","w");
+    fclose(fp3);
+    FILE* fp4 = fopen("D:/newact","w");
+    fclose(fp4);
+    FILE* fp5 = fopen("D:/i","w");
+    fclose(fp5);
+    FILE* fp6 = fopen("D:/money","w");
+    fclose(fp6);
+    FILE* fp7 = fopen("D:/said","w");
+    fclose(fp7);
+    printf("已全部清除\n");
+}

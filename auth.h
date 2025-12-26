@@ -20,7 +20,7 @@ mebr* rg(mebr* head) {
 }
 int choice() {
     int num;
-    printf("1.成员注册 2.成员登录 3.管理员登陆 4.社长登录 5.退出\n");
+    printf("1.成员注册 2.成员登录 3.管理员登陆 4.社长登录 5.退出 6.清空全部数据\n");
     scanf("%d", &num);
     return num;
 }
@@ -44,6 +44,10 @@ int enty() {
 int mebrenty(mebr* applhead) {
     char usn1[10];
     char pas1[10];
+    if(applhead ->next  == 0){
+        printf("社团暂无成员，请注册\n");
+        return 0; 
+      }
     applhead = applhead->next;
     while (applhead) {
         int f =0;
@@ -91,4 +95,10 @@ int presenty(){
         if(r1 != 0)printf("您非社长,请选择其他方式登录\n");
         if(r2 != 0)printf("密码错误\n");
     }
+}
+int ensure(){
+    int ch;
+    printf("你确定吗?(0/1)\n");
+    scanf("%d",&ch);
+    return ch;
 }

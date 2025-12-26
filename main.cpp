@@ -25,23 +25,25 @@ int main() {
     break;
     case 2://成员登录
     {
-    if (mebrenty(applhead))printf("登陆成功\n");
-    int n2 = choicemebr();
-    switch (n2)
-    {
-    case 1://社团信息
-    showclub(applhead);
-    break;
-    case 2://个人信息
-    showself(acti,i);
-    break;
-    case 3://报名活动
-    int ch = showacti(acti,i);
-    if(ch == -1)break;
-    acti[ch].head =newactimebr(acti,ch);
-    saveacti(acti,i);
-    printf("您以报名\n");
-    break;
+    if (mebrenty(applhead)){
+        printf("登陆成功\n");
+        int n2 = choicemebr();
+        switch (n2)
+        {
+            case 1://社团信息
+            showclub(applhead);
+            break;
+            case 2://个人信息
+            showself(acti,i);
+            break;
+            case 3://报名活动
+            int ch = showacti(acti,i);
+            if(ch == -1)break;
+            acti[ch].head =newactimebr(acti,ch);
+            saveacti(acti,i);
+            printf("您以报名\n");
+            break;
+        }
     }
     break;
     }
@@ -85,7 +87,7 @@ int main() {
             showclub(applhead);
             break;
         case 2://个人信息
-            ifmtpres();
+            ifmtpres(i,acti);
             break;
         case 3://发布活动
         if(actimoney(acti,i,&money)){
@@ -109,6 +111,11 @@ int main() {
     }
     case 5://退出程序
         return 0;
+    case 6://清空社团数据
+        if(ensure()){
+        cleanall();
+        }
+        break;
     }
 }
 }

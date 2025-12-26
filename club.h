@@ -27,10 +27,16 @@ int choicepres(){
     scanf("%d", &n);
     return n;
 }
-void ifmtpres(){
+void ifmtpres(int i,activ a[]){
     printf("社团身份:社长\n");
+    if(i == 0){
+        printf("您暂未发布过活动\n");
+        return;
+    }
     printf("发布过的活动\n");
-
+    for(int j =0;j<i;j++){
+        printf("%s\n",a[j].name);
+    }
 }
 int showacti(activ a[],int i){
     int is_part[100];
@@ -76,7 +82,18 @@ void showself(activ a[],int i){
     }
 }
 void showactiname(activ a[],int i){
-    for(int j=0;j<=i;j++){
-       printf("第%d个活动:%s\n",j+1,a[j].name); 
+    if(i == 0){
+        printf("并没有任何活动\n");
+        return;
+    }
+    printf("一共有%d个活动\n",i);
+    for(int j=0;j<i;j++){
+        am* head = a[j].head->next;
+        printf("%s:",a[j].name);
+        while(head){
+            printf("%s ",head->name);
+            head =head->next;
+        } 
+        printf("\n");
     }
 }
