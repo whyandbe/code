@@ -166,6 +166,7 @@ void saveacti(activ acti[],int i){
                 head =head->next;
             }
             }
+            fprintf(fp,"//end// ");
     }
     fclose(fp);
 }
@@ -178,6 +179,7 @@ void createacti(activ a[],int i){
 }
 void readacti(activ acti[],int i){
     FILE* fp =fopen("D:/newact","r");
+    char end[] = {"//end//"};
     createacti(acti,i);
     if(fp ==0)return;
     for(int j=0;j<=i;j++){
@@ -186,6 +188,7 @@ void readacti(activ acti[],int i){
         am* tial = acti[j].head;
         if(fscanf(fp,"%s",acti[j].name)==1&&fscanf(fp,"%d",&acti[j].need)==1){
             while(fscanf(fp,"%s",name) ==1){
+                if(strcmp(end,name) ==0)break;
                 am* newhead =(am*)malloc(sizeof(am));
                 strcpy(newhead->name,name);
                     tial ->next =newhead;
@@ -198,6 +201,7 @@ void readacti(activ acti[],int i){
 }
 void newactc(activ a[],int i){
     if(readi() ==-1)i=0;
+    printf("%d\n",i);
     printf("请输入活动名\n");
     scanf("%s",a[i].name);
     i++;

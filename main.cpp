@@ -10,7 +10,10 @@ using namespace std;
 int main() {
     while(1){
     if(readi() == -1)i=0;
-    readacti(acti,i); 
+    else{
+        i =readi();
+    }
+    readacti(acti,i);
     int sta = 1;
     if (sta == 0)
     {

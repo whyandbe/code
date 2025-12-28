@@ -40,8 +40,9 @@ void ifmtpres(int i,activ a[]){
 }
 int showacti(activ a[],int i){
     int is_part[100];
-    int ch;
-    if(i == 0)printf("社长暂未发布活动");
+    int ch =0;
+    int f =0;
+    if(i == 0)printf("社长暂未发布活动\n");
     else{
         for(int j=1;j<=i;j++){
             am* tial = a[j-1].head;
@@ -51,20 +52,27 @@ int showacti(activ a[],int i){
                     is_part[j-1] =1;
                     break;
                 }
+                else{
+                    f =1;
+                }
             }
             if(is_part[j-1] == 0){
-                printf("第%d个活动:%s\n",j,a[j-1].name);
-                printf("请输入你要参加第几个活动\n");
-                scanf("%d",&ch);
-                return ch-1;
+                printf("第%d个活动:%s----未报名\n",j,a[j-1].name);
+                if(i == j){
+                    printf("请输入你要参加第几个活动\n");
+                    scanf("%d",&ch);
+                    return ch-1;
+                }
             }
             else{
-                printf("已无活动供您参加\n");
-                return 0;
+                printf("第%d个活动:%s----已报名\n",j,a[j-1].name);
+                if(f == 0&&i == j){
+                    printf("--------已无活动供您参加\n");
+                }
             }
         }
     }
-    return ch-1;
+    return -1;
 }
 void showself(activ a[],int i){
     printf("您的名字:%s\n",namenow);
