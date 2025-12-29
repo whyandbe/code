@@ -101,7 +101,12 @@ void appr(mebr* pinghead) {
         printf("姓名：%s\n账号：%s\n密码：%s\n", q->name, q->username, q->passwords);
         printf("是否审批通过-------( 1 / 2 )\n");
         int ch;
-        scanf("%d", &ch);
+        int ret =scanf("%d", &ch);
+        while(ret !=1){
+            printf("输入错误，请重新输入\n");
+            while(getchar() != '\n');
+            ret =scanf("%d", &ch);
+        }
         if (ch == 1) {
             applhead = newadd(applhead, q->name, q->username, q->passwords, appl);
             if (q->next) {
@@ -201,7 +206,6 @@ void readacti(activ acti[],int i){
 }
 void newactc(activ a[],int i){
     if(readi() ==-1)i=0;
-    printf("%d\n",i);
     printf("请输入活动名\n");
     scanf("%s",a[i].name);
     i++;
@@ -239,7 +243,12 @@ int readmoney(){
 void applymoney(){
     int wants;
     printf("请输入要申请的经费\n");
-    scanf("%d",&wants);
+    int ret = scanf("%d",&wants);
+    while(ret !=1){
+            printf("输入错误，请重新输入\n");
+            while(getchar() != '\n');
+            ret =scanf("%d", &wants);
+        }
     FILE* fp =fopen("D:/applymoney","w");
     fprintf(fp,"%d",wants);
     fclose(fp);
@@ -259,8 +268,15 @@ int apprmoney(int money){
             fclose(fp);
             return money;
         }
+        while(1){
         printf("社长申请了%d元\n是否同意-----(1/2)\n",addmoney);
-        scanf("%d",&ch);
+        int ret = scanf("%d",&ch);
+        if(ret == 1&&(ch == 1||ch == 2))return ch;
+        else{
+            printf("输入错误，请重新输入\n");
+            while(getchar() != '\n');
+        }
+        }
         if(ch == 2){
             FILE* fp =fopen("D:/applymoney","w");
             fprintf(fp,"%d",0);
@@ -290,18 +306,26 @@ void readsaid(){
     fclose(fp);
 }
 int actimoney(activ a[],int i,int* money){
-    printf("请输入活动要花费的经费\n");
-    scanf("%d",&a[i].need);
-    if(a[i].need>*money){
-        printf("该活动要求%d\n经费不足\n",a[i].need);
-        return 0;
-    }
-    else{
-        printf("活动花费%d元",a[i].need);
-        *money -= a[i].need;
-        return 1;
-    }
+     while(1){
+        printf("请输入活动要花费的经费\n");
+        int ret = scanf("%d",&a[i].need);
+        if(ret == 1){
+            if(a[i].need>*money){
+            printf("该活动要求%d\n经费不足\n",a[i].need);
+            return 0;
+        }
+        else{
+            printf("活动花费%d元",a[i].need);
+            *money -= a[i].need;
+            return 1;
+        }
     savemoney(*money);
+        }
+        else{
+            printf("输入错误，请重新输入\n");
+            while(getchar() != '\n');
+        }
+        }
 }
 void costrecord(activ a[],int i){
     if(i == 0){

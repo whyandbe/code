@@ -11,21 +11,39 @@ void showclub(mebr* applhead) {
 }
 int choiceappr() {
     int n;
-    printf("1.审批注册新成员 2.查看社团审批记录 3.查看社团活动\n 4.审批经费 5.查看社团花费记录 6.注销社团 7.退出登录\n");
-    scanf("%d", &n);
-    return n;
+    while(1){
+        printf("1.审批注册新成员 2.查看社团审批记录 3.查看社团活动\n 4.审批经费 5.查看社团花费记录 6.注销社团 7.退出登录\n");
+        int ret = scanf("%d", &n);
+        if(ret == 1)return n;
+        else if(ret == 0){
+            printf("输入错误，请重新输入\n");
+            while(getchar() != '\n'){}
+    }
+}
 }
 int choicemebr() {
     int n;
-    printf("1.查看社团信息 2.查看个人信息 3.参加报名活动 4.退出登录\n");
-    scanf("%d", &n);
-    return n;
+    while(1){
+        printf("1.查看社团信息 2.查看个人信息 3.参加报名活动 4.退出登录\nn");
+        int ret = scanf("%d", &n);
+        if(ret == 1)return n;
+        else if(ret == 0){
+            printf("输入错误，请重新输入\n");
+            while(getchar() != '\n'){}
+    }
+}
 }
 int choicepres(){
     int n;
-    printf("1.查看社团信息 2.查看个人信息 3.发布活动\n4.查看社团花费记录 5.申请社团经费 6.查看经费\n7.退出登录\n");
-    scanf("%d", &n);
-    return n;
+    while(1){
+        printf("1.查看社团信息 2.查看个人信息 3.发布活动\n4.查看社团花费记录 5.申请社团经费 6.查看经费\n7.退出登录\n");
+        int ret = scanf("%d", &n);
+        if(ret == 1)return n;
+        else if(ret == 0){
+            printf("输入错误，请重新输入\n");
+            while(getchar() != '\n'){}
+    }
+}
 }
 void ifmtpres(int i,activ a[]){
     printf("社团身份:社长\n");
@@ -60,7 +78,12 @@ int showacti(activ a[],int i){
                 printf("第%d个活动:%s----未报名\n",j,a[j-1].name);
                 if(i == j){
                     printf("请输入你要参加第几个活动\n");
-                    scanf("%d",&ch);
+                    int ret = scanf("%d",&ch);
+                    while(ret !=1){
+                        printf("输入错误，请重新输入\n");
+                        while(getchar() != '\n');
+                            ret =scanf("%d", &ch);
+        }
                     return ch-1;
                 }
             }

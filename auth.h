@@ -19,10 +19,16 @@ mebr* rg(mebr* head) {
     return head;
 }
 int choice() {
-    int num;
-    printf("1.成员注册 2.成员登录 3.管理员登陆 4.社长登录 5.退出 6.清空全部数据\n");
-    scanf("%d", &num);
-    return num;
+    int n;
+    while(1){
+        printf("1.成员注册 2.成员登录 3.管理员登陆 4.社长登录 5.退出 6.清空全部数据\n");
+        int ret = scanf("%d", &n);
+        if(ret == 1)return n;
+        else if(ret == 0){
+            printf("输入错误，请重新输入\n");
+            while(getchar() != '\n'){}
+    }
+}
 }
 int enty() {
     char usn[] = { "1" };
@@ -64,7 +70,7 @@ int mebrenty(mebr* applhead) {
             applhead =applhead->next;
         }
             if (strcmp(applhead->username, usn1) != 0) {
-            printf("账号错误\n");
+                printf("账号错误\n");
             }
             else {
                 t1 = 1;
@@ -97,8 +103,14 @@ int presenty(){
     }
 }
 int ensure(){
-    int ch;
-    printf("你确定吗?(0/1)\n");
-    scanf("%d",&ch);
-    return ch;
+    int n;
+    while(1){
+        printf("你确定吗?(0/1)\n");
+        int ret = scanf("%d", &n);
+        if(ret == 1)return n;
+        else if(ret == 0){
+            printf("输入错误，请重新输入\n");
+            while(getchar() != '\n'){}
+    }
+}
 }
