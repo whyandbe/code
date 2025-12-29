@@ -18,6 +18,7 @@ int main() {
     if (sta == 0)
     {
         printf("社团已被注销\n");
+        freeall(pinghead,applhead,rejehead,acti,i);
         return 0;
     }
     int n = choice();
@@ -73,6 +74,7 @@ int main() {
         break;
         case 6://退出
         sta = 0;
+        freeall(pinghead,applhead,rejehead,acti,i);
         return 0;
         }
     }
@@ -108,14 +110,17 @@ int main() {
             printf("社团资金:%d\n",money);
             break;
         case 7://退出
+            freeall(pinghead,applhead,rejehead,acti,i);
             return 0;
     }
     break;
     }
     case 5://退出程序
+        freeall(pinghead,applhead,rejehead,acti,i);
         return 0;
     case 6://清空社团数据
         if(ensure()){
+        freeall(pinghead,applhead,rejehead,acti,i);
         cleanall();
         }
         break;

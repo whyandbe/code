@@ -355,3 +355,25 @@ void cleanall(){
     fclose(fp7);
     printf("已全部清除\n");
 }
+void freelistmebr(mebr* a){
+    while(a){
+        mebr* head = a;
+        a =a->next;
+        free(head);
+    }
+}
+void freelistacti(am* a){
+    while(a){
+        am* head = a;
+        a =a->next;
+        free(head);
+    }
+}
+void freeall(mebr* a,mebr* b,mebr* c,activ d[],int i){
+    freelistmebr(a);
+    freelistmebr(b);
+    freelistmebr(c);
+    for(int j =0;j<i;j++){
+        freelistacti(d[j].head);
+    }
+}
