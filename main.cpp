@@ -3,22 +3,19 @@
 #include "club.h"
 #include "utils.h"
 #include "time.h"
-int i = readi();//活动数量
 int money =readmoney();
 activ acti[200];
 using namespace std;
+int i;
 int main() {
     while(1){
-    if(readi() == -1)i=0;
-    else{
-        i =readi();
-    }
+    i = readi();//活动数量
     readacti(acti,i);
     int sta = 1;
     if (sta == 0)
     {
         printf("社团已被注销\n");
-        freeall(pinghead,applhead,rejehead,acti,i);
+        freeall(&pinghead,&applhead,&rejehead,acti,i);
         return 0;
     }
     int n = choice();
@@ -49,8 +46,8 @@ int main() {
             break;
         }
     }
-    break;
     }
+    break;
     case 3://管理员登录
     {
     if (enty()) {
@@ -77,14 +74,14 @@ int main() {
         break;
         case 7://注销社团
         sta = 0;
-        freeall(pinghead,applhead,rejehead,acti,i);
+        freeall(&pinghead,&applhead,&rejehead,acti,i);
         return 0;
         case 8://退出
         return 0;
         }
     }
-    break;
     }
+    break;
     case 4://社长登录
     {
     int n4;
@@ -115,18 +112,19 @@ int main() {
             printf("社团资金:%d\n",money);
             break;
         case 7://退出
-            freeall(pinghead,applhead,rejehead,acti,i);
+            freeall(&pinghead,&applhead,&rejehead,acti,i);
             return 0;
     }
-    break;
     }
+    break;
     case 5://退出程序
-        freeall(pinghead,applhead,rejehead,acti,i);
+        freeall(&pinghead,&applhead,&rejehead,acti,i);
         return 0;
     case 6://清空社团数据
         if(ensure()){
-        freeall(pinghead,applhead,rejehead,acti,i);
+        freeall(&pinghead,&applhead,&rejehead,acti,i);
         cleanall();
+        return 0;
         }
         break;
     }

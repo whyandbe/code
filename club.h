@@ -7,7 +7,9 @@ void showclub(mebr* applhead) {
     printf("社团管理员:administrator\n");
     printf("社长:president\n");
     printf("社团成员信息\n");
+    if(applhead){
     show(applhead);
+    }
 }
 int choiceappr() {
     int n;
@@ -24,7 +26,7 @@ int choiceappr() {
 int choicemebr() {
     int n;
     while(1){
-        printf("1.查看社团信息 2.查看个人信息 3.参加报名活动 4.退出登录\nn");
+        printf("1.查看社团信息 2.查看个人信息 3.参加报名活动 4.退出登录\n");
         int ret = scanf("%d", &n);
         if(ret == 1)return n;
         else if(ret == 0){
@@ -83,7 +85,7 @@ int showacti(activ a[],int i){
                         printf("输入错误，请重新输入\n");
                         while(getchar() != '\n');
                             ret =scanf("%d", &ch);
-        }
+                        }
                     return ch-1;
                 }
             }

@@ -151,10 +151,10 @@ void savei(int i){
     fclose(fp);
 }
 int readi(){
-    int i;
+    int  i = 0;
     FILE* fp = fopen("D:/i","r");
-    if(fp == 0)return -1;
-    if(fscanf(fp,"%d",&i) == 0)return -1;
+    if(fp == 0)return i;
+    if(fscanf(fp,"%d",&i) == 0)return 0;
     fclose(fp);
     return i;
 }
@@ -177,6 +177,9 @@ void saveacti(activ acti[],int i){
 }
 void createacti(activ a[],int i){
     for(int j=0;j<=i;j++){
+        if(a[j].head){
+            continue;
+        }
         a[j].head= (am*)malloc(sizeof(am));
         memset(a[j].head,0,sizeof(am));
         a[j].head->next =0;
@@ -271,20 +274,15 @@ int apprmoney(int money){
         while(1){
         printf("社长申请了%d元\n是否同意-----(1/2)\n",addmoney);
         int ret = scanf("%d",&ch);
-        if(ret == 1&&(ch == 1||ch == 2))return ch;
-        else{
-            printf("输入错误，请重新输入\n");
-            while(getchar() != '\n');
-        }
-        }
-        if(ch == 2){
+        if(ret == 1&&(ch == 1||ch == 2)){
+            if(ch == 2){
             FILE* fp =fopen("D:/applymoney","w");
             fprintf(fp,"%d",0);
             fclose(fp);
             FILE* Fp = fopen("D:/said","w");
-            fprintf(Fp,"%s","被管理员驳回了\n");
+            fprintf(Fp,"%s","被管理员驳回了");
             fclose(Fp);
-            return 0;
+            return money;
         }
         else if(ch == 1){
             FILE* fp =fopen("D:/applymoney","w");
@@ -292,9 +290,13 @@ int apprmoney(int money){
             fclose(fp);
             return money+addmoney;
         }
-        else{
-            printf("请重新输入(1/2)\n");
         }
+        else{
+            printf("输入错误，请重新输入\n");
+            while(getchar() != '\n');
+        }
+        }
+            printf("请重新输入(1/2)\n");
     }
 }
 void readsaid(){
@@ -365,27 +367,31 @@ void cleanall(){
     fclose(fp6);
     FILE* fp7 = fopen("D:/said","w");
     fclose(fp7);
+    FILE* fp8 = fopen("D:/financedata","w");
+    fclose(fp8);
     printf("已全部清除\n");
 }
-void freelistmebr(mebr* a){
-    while(a){
-        mebr* head = a;
-        a =a->next;
-        free(head);
+void freelistmebr(mebr** a) {
+    while (*a) {
+        mebr* tmp = *a;
+        *a = (*a)->next;
+        free(tmp);
     }
 }
-void freelistacti(am* a){
-    while(a){
-        am* head = a;
-        a =a->next;
-        free(head);
+
+void freelistacti(am** a) {
+    while (*a) {
+        am* tmp = *a;
+        *a = (*a)->next;
+        free(tmp);
     }
 }
-void freeall(mebr* a,mebr* b,mebr* c,activ d[],int i){
+
+void freeall(mebr** a, mebr** b, mebr** c, activ d[], int i) {
     freelistmebr(a);
     freelistmebr(b);
     freelistmebr(c);
-    for(int j =0;j<i;j++){
-        freelistacti(d[j].head);
+    for (int j = 0; j < i; j++) {
+        freelistacti(&d[j].head);
     }
 }
