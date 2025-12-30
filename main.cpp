@@ -3,18 +3,22 @@
 #include "club.h"
 #include "utils.h"
 #include "time.h"
-int i = readi();
+int i = readi();//活动数量
 int money =readmoney();
 activ acti[200];
 using namespace std;
 int main() {
     while(1){
     if(readi() == -1)i=0;
-    readacti(acti,i); 
+    else{
+        i =readi();
+    }
+    readacti(acti,i);
     int sta = 1;
     if (sta == 0)
     {
         printf("社团已被注销\n");
+        freeall(pinghead,applhead,rejehead,acti,i);
         return 0;
     }
     int n = choice();
@@ -25,23 +29,25 @@ int main() {
     break;
     case 2://成员登录
     {
-    if (mebrenty(applhead))printf("登陆成功\n");
-    int n2 = choicemebr();
-    switch (n2)
-    {
-    case 1://社团信息
-    showclub(applhead);
-    break;
-    case 2://个人信息
-    showself(acti,i);
-    break;
-    case 3://报名活动
-    int ch = showacti(acti,i);
-    if(ch == -1)break;
-    acti[ch].head =newactimebr(acti,ch);
-    saveacti(acti,i);
-    printf("您以报名\n");
-    break;
+    if (mebrenty(applhead)){
+        printf("登陆成功\n");
+        int n2 = choicemebr();
+        switch (n2)
+        {
+            case 1://社团信息
+            showclub(applhead);
+            break;
+            case 2://个人信息
+            showself(acti,i);
+            break;
+            case 3://报名活动
+            int ch = showacti(acti,i);
+            if(ch == -1)break;
+            acti[ch].head =newactimebr(acti,ch);
+            saveacti(acti,i);
+            printf("您以报名\n");
+            break;
+        }
     }
     break;
     }
@@ -64,10 +70,16 @@ int main() {
         savemoney(money);
         break;
         case 5://经费记录
-        costrecord(acti,i);
+        costrecord(acti,i,money);
         break;
-        case 6://退出
+        case 6://导出财务报表
+        putrecord(acti,i,money);
+        break;
+        case 7://注销社团
         sta = 0;
+        freeall(pinghead,applhead,rejehead,acti,i);
+        return 0;
+        case 8://退出
         return 0;
         }
     }
@@ -85,7 +97,7 @@ int main() {
             showclub(applhead);
             break;
         case 2://个人信息
-            ifmtpres();
+            ifmtpres(i,acti);
             break;
         case 3://发布活动
         if(actimoney(acti,i,&money)){
@@ -93,7 +105,7 @@ int main() {
         }
             break;
         case 4://经费记录
-            costrecord(acti,i);
+            costrecord(acti,i,money);
             break;
         case 5://申请经费
             readsaid();
@@ -103,12 +115,20 @@ int main() {
             printf("社团资金:%d\n",money);
             break;
         case 7://退出
+            freeall(pinghead,applhead,rejehead,acti,i);
             return 0;
     }
     break;
     }
     case 5://退出程序
+        freeall(pinghead,applhead,rejehead,acti,i);
         return 0;
+    case 6://清空社团数据
+        if(ensure()){
+        freeall(pinghead,applhead,rejehead,acti,i);
+        cleanall();
+        }
+        break;
     }
 }
 }
