@@ -70,11 +70,16 @@ int main() {
         savemoney(money);
         break;
         case 5://经费记录
-        costrecord(acti,i);
+        costrecord(acti,i,money);
         break;
-        case 6://退出
+        case 6://导出财务报表
+        putrecord(acti,i,money);
+        break;
+        case 7://注销社团
         sta = 0;
         freeall(pinghead,applhead,rejehead,acti,i);
+        return 0;
+        case 8://退出
         return 0;
         }
     }
@@ -100,7 +105,7 @@ int main() {
         }
             break;
         case 4://经费记录
-            costrecord(acti,i);
+            costrecord(acti,i,money);
             break;
         case 5://申请经费
             readsaid();

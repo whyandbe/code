@@ -12,7 +12,7 @@ void showclub(mebr* applhead) {
 int choiceappr() {
     int n;
     while(1){
-        printf("1.审批注册新成员 2.查看社团审批记录 3.查看社团活动\n 4.审批经费 5.查看社团花费记录 6.注销社团 7.退出登录\n");
+        printf("1.审批注册新成员 2.查看社团审批记录 3.查看社团活动\n 4.审批经费 5.查看社团花费记录 6. 导出财务表 7.注销社团 8.退出登录\n");
         int ret = scanf("%d", &n);
         if(ret == 1)return n;
         else if(ret == 0){

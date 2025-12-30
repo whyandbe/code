@@ -327,14 +327,26 @@ int actimoney(activ a[],int i,int* money){
         }
         }
 }
-void costrecord(activ a[],int i){
+void costrecord(activ a[],int i,int money){
     if(i == 0){
         printf("暂无花费记录\n");
         return;
     }
     for(int j=0;j<i;j++){
-       printf("%s : -%d\n",a[j].name,a[j].need); 
+       printf("%s : -%d  剩余:%d\n",a[j].name,a[j].need,money); 
     }
+}
+void putrecord(activ a[],int i,int money){
+    FILE* fp =fopen("D:/financedata","w");
+    if(i == 0){
+        fprintf(fp,"暂无花费记录\n");
+        return;
+    }
+    for(int j=0;j<i;j++){
+       fprintf(fp,"%s : -%d  剩余:%d\n",a[j].name,a[j].need,money); 
+    }
+    printf("已为您导出于D:/finacnedata\n");
+    fclose(fp);
 }
 void cleanall(){
     FILE* fp = fopen("D:/applymoney","w");
