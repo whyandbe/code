@@ -337,7 +337,7 @@ void costrecord(activ a[],int i,int money){
     }
 }
 void putrecord(activ a[],int i,int money){
-    FILE* fp =fopen("D:/financedata","w");
+    FILE* fp =fopen("D:/financedata.txt","w");
     if(i == 0){
         fprintf(fp,"暂无花费记录\n");
         return;
